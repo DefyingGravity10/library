@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+tr {
+  @apply border-b-2 h-16
+}
