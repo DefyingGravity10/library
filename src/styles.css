@@ -606,14 +606,6 @@ video {
   background-color: rgb(244 244 245 / var(--tw-bg-opacity));
 }
 
-.p-6 {
-  padding: 1.5rem;
-}
-
-.p-12 {
-  padding: 3rem;
-}
-
 .px-12 {
   padding-left: 3rem;
   padding-right: 3rem;
