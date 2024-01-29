@@ -23,13 +23,9 @@ function updateCurrentId() {
   return ++currentId;
 }
 
-function displayBooks() {
+function displayStoredBooks() {
   if (myLibrary.length === 0) {
-    const empty = document.getElementById("content");
-    const text = document.createTextNode(
-      "There are currently no books in the library.",
-    );
-    empty.appendChild(text);
+    emptyLibrary();
   } else {
     const table = document.getElementsByTagName("table")[0];
     myLibrary.forEach((e) => {
@@ -58,7 +54,9 @@ function displayBooks() {
               const row = button.parentNode.parentNode;
               row.parentNode.removeChild(row);
               myLibrary = myLibrary.filter((item) => item.bookId !== e.bookId);
-              console.log(myLibrary);
+              if (myLibrary.length === 0) {
+                emptyLibrary();
+              }
             };
             cell.appendChild(button);
             continue;
@@ -72,8 +70,92 @@ function displayBooks() {
   }
 }
 
+function emptyLibrary() {
+  const empty = document.getElementById("content");
+  const text = document.createTextNode(
+    "There are currently no books in the library.",
+  );
+  empty.appendChild(text);
+}
+
+function updateLibrary() {
+  const table = document.getElementsByTagName("table")[0];
+  const row = table.insertRow();
+  let text;
+  console.log(myLibrary[myLibrary.length - 1]);
+  for (let i = 0; i < 5; ++i) {
+    const cell = row.insertCell(i);
+    switch (i) {
+      case 0:
+        text = document.createTextNode(
+          `${myLibrary[myLibrary.length - 1].title}`,
+        );
+        break;
+      case 1:
+        text = document.createTextNode(
+          `${myLibrary[myLibrary.length - 1].author}`,
+        );
+        break;
+      case 2:
+        text = document.createTextNode(
+          `${myLibrary[myLibrary.length - 1].numberOfPages}`,
+        );
+        break;
+      case 3:
+        text = document.createTextNode(
+          `${myLibrary[myLibrary.length - 1].haveRead}`,
+        );
+        break;
+      case 4:
+        const button = document.createElement("div");
+        button.classList.add("delete-button");
+        button.onclick = function () {
+          const row = button.parentNode.parentNode;
+          row.parentNode.removeChild(row);
+          myLibrary = myLibrary.filter((item) => item.bookId !== e.bookId);
+          if (myLibrary.length === 0) {
+            emptyLibrary();
+          }
+        };
+        cell.appendChild(button);
+        continue;
+      default:
+        text = document.createTextNode(``);
+        break;
+    }
+    cell.appendChild(text);
+  }
+}
+
 // Sample books
-//addBookToLibrary(`Book Title`, `Me`, `199`, `have not read`);
+addBookToLibrary(`Book Title`, `Me`, `199`, `have not read`);
 //addBookToLibrary(`HAHAHAHA`, `Me again`, `9`, `have read`);
 //addBookToLibrary(`a`, `Me again`, `29`, `have read`);
-displayBooks();
+displayStoredBooks();
+
+function getNewBook() {}
+const newBookButton = document.getElementById("new-book");
+newBookButton.addEventListener("click", openPopUp);
+
+const popUp = document.getElementById("pop-up");
+const submitButton = document.getElementById("submit");
+const closeBtn = document.getElementById("close-pop-up");
+
+// Function to show the popUp
+function openPopUp() {
+  popUp.classList.remove("hidden");
+}
+
+// Function to hide the popUp
+function closePopUp() {
+  popUp.classList.add("hidden");
+}
+
+function random() {
+  addBookToLibrary(`HAHAHAHA`, `Me again`, `9`, `have read`);
+  updateLibrary();
+}
+
+// Event listener to close the popUp
+closeBtn.addEventListener("click", closePopUp);
+submitButton.addEventListener("click", random);
