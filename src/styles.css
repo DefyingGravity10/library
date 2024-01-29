@@ -629,7 +629,29 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 tr {
   height: 4rem;
   border-bottom-width: 2px;
+}
+
+.delete-button, .delete-button:hover {
+  height: 5rem;
+}
+
+.delete-button {
+  background-image: url("../svg/trash.svg");
+}
+
+.delete-button:hover {
+  background-image: url("../svg/trash_hover.svg");
+}
+
+.delete-button, .delete-button:hover {
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: center;
 }

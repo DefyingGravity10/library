@@ -5,3 +5,21 @@
 tr {
   @apply border-b-2 h-16
 }
+
+.delete-button, .delete-button:hover {
+  @apply h-20
+}
+
+.delete-button {
+  background-image: url("../svg/trash.svg");
+} 
+
+.delete-button:hover {
+  background-image: url("../svg/trash_hover.svg");
+}
+
+.delete-button, .delete-button:hover {
+  background-repeat: no-repeat;
+  background-size: 24px;
+  background-position: center;
+}
