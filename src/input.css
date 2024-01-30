@@ -6,6 +6,14 @@ tr {
   @apply border-b-2 h-16
 }
 
+.empty {
+  @apply mt-4 text-gray-600
+}
+
+.book-entry:hover {
+  @apply bg-zinc-200
+}
+
 .delete-button, .delete-button:hover {
   @apply h-20
 }
