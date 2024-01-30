@@ -74,10 +74,13 @@ function displayStoredBooks() {
 
 function emptyLibrary() {
   const empty = document.getElementById("content");
+  const div = document.createElement("div");
   const text = document.createTextNode(
     "There are currently no books in the library.",
   );
-  empty.appendChild(text);
+  div.classList.add("empty");
+  div.appendChild(text);
+  empty.appendChild(div);
 }
 
 function updateLibrary() {
