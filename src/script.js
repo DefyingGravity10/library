@@ -32,6 +32,8 @@ function displayStoredBooks() {
       const row = table.insertRow();
       let text;
 
+      row.classList.add("book-entry");
+
       for (let i = 0; i < 5; ++i) {
         const cell = row.insertCell(i);
         switch (i) {
@@ -81,30 +83,25 @@ function emptyLibrary() {
 function updateLibrary() {
   const table = document.getElementsByTagName("table")[0];
   const row = table.insertRow();
+  const newBook = myLibrary[myLibrary.length - 1];
   let text;
-  console.log(myLibrary[myLibrary.length - 1]);
+
+  row.classList.add("book-entry");
+
   for (let i = 0; i < 5; ++i) {
     const cell = row.insertCell(i);
     switch (i) {
       case 0:
-        text = document.createTextNode(
-          `${myLibrary[myLibrary.length - 1].title}`,
-        );
+        text = document.createTextNode(`${newBook.title}`);
         break;
       case 1:
-        text = document.createTextNode(
-          `${myLibrary[myLibrary.length - 1].author}`,
-        );
+        text = document.createTextNode(`${newBook.author}`);
         break;
       case 2:
-        text = document.createTextNode(
-          `${myLibrary[myLibrary.length - 1].numberOfPages}`,
-        );
+        text = document.createTextNode(`${newBook.numberOfPages}`);
         break;
       case 3:
-        text = document.createTextNode(
-          `${myLibrary[myLibrary.length - 1].haveRead}`,
-        );
+        text = document.createTextNode(`${newBook.haveRead}`);
         break;
       case 4:
         const button = document.createElement("div");
@@ -112,7 +109,9 @@ function updateLibrary() {
         button.onclick = function () {
           const row = button.parentNode.parentNode;
           row.parentNode.removeChild(row);
-          myLibrary = myLibrary.filter((item) => item.bookId !== e.bookId);
+          myLibrary = myLibrary.filter(
+            (item) => item.bookId !== newBook.bookId,
+          );
           if (myLibrary.length === 0) {
             emptyLibrary();
           }
