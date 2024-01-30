@@ -74,6 +74,11 @@ function displayStoredBooks() {
 
 function emptyLibrary() {
   const empty = document.getElementById("content");
+
+  if (empty.querySelector(".empty") !== null) {
+    empty.querySelector(".empty").remove();
+  }
+
   const div = document.createElement("div");
   const text = document.createTextNode(
     "There are currently no books in the library.",
@@ -90,6 +95,12 @@ function updateLibrary() {
   let text;
 
   row.classList.add("book-entry");
+
+  const empty = document.getElementById("content");
+
+  if (empty.querySelector(".empty") !== null) {
+    empty.querySelector(".empty").remove();
+  }
 
   for (let i = 0; i < 5; ++i) {
     const cell = row.insertCell(i);
