@@ -31,3 +31,23 @@ tr {
   background-size: 24px;
   background-position: center;
 }
+
+.text-box {
+  @apply border rounded-sm border-zinc-400 bg-zinc-100
+}
+
+#status {
+  @apply bg-green-300 rounded-xl w-1/3
+}
+
+#status:hover {
+  @apply bg-green-400
+}
+
+#status.unread {
+  @apply bg-red-200
+}
+
+#status.unread:hover {
+  @apply bg-red-300
+}

@@ -153,6 +153,7 @@ newBookButton.addEventListener("click", openPopUp);
 const popUp = document.getElementById("pop-up");
 const submitButton = document.getElementById("submit");
 const closeBtn = document.getElementById("close-pop-up");
+const readStatus = document.getElementById("status");
 
 // Function to show the popUp
 function openPopUp() {
@@ -169,6 +170,17 @@ function random() {
   updateLibrary();
 }
 
+function toggleStatus() {
+  readStatus.classList.toggle("unread");
+
+  if (readStatus.value === "Read") {
+    readStatus.value = "Not read";
+  } else {
+    readStatus.value = "Read";
+  }
+}
+
 // Event listener to close the popUp
 closeBtn.addEventListener("click", closePopUp);
 submitButton.addEventListener("click", random);
+readStatus.addEventListener("click", toggleStatus);
