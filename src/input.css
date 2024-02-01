@@ -36,6 +36,10 @@ tr {
   @apply border rounded-sm border-zinc-400 bg-zinc-100
 }
 
+.text-box:invalid.empty {
+  @apply border-red-400 m-0
+}
+
 #status {
   @apply bg-green-300 rounded-xl w-1/3
 }

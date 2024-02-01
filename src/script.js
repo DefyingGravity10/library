@@ -146,7 +146,6 @@ addBookToLibrary(`Book Title`, `Me`, `199`, `have not read`);
 //addBookToLibrary(`a`, `Me again`, `29`, `have read`);
 displayStoredBooks();
 
-function getNewBook() {}
 const newBookButton = document.getElementById("new-book");
 newBookButton.addEventListener("click", openPopUp);
 
@@ -162,12 +161,37 @@ function openPopUp() {
 
 // Function to hide the popUp
 function closePopUp() {
+  const title = document.getElementById("title");
+  const author = document.getElementById("author");
+  const numberOfPages = document.getElementById("numberOfPages");
+
+  title.classList.remove("empty");
+  author.classList.remove("empty");
+  numberOfPages.classList.remove("empty");
   popUp.classList.add("hidden");
 }
 
-function random() {
-  addBookToLibrary(`HAHAHAHA`, `Me again`, `9`, `have read`);
+function getNewBook() {
+  const title = document.getElementById("title");
+  const author = document.getElementById("author");
+  const numberOfPages = document.getElementById("numberOfPages");
+  const status = document.getElementById("status");
+
+  if (!title.value || !author.value || !numberOfPages.value) {
+    title.classList.add("empty");
+    author.classList.add("empty");
+    numberOfPages.classList.add("empty");
+    alert("Please fill out all the fields.");
+    return;
+  }
+  addBookToLibrary(
+    title.value,
+    author.value,
+    numberOfPages.value,
+    status.value,
+  );
   updateLibrary();
+  clearValues(title, author, numberOfPages);
 }
 
 function toggleStatus() {
@@ -180,7 +204,13 @@ function toggleStatus() {
   }
 }
 
+function clearValues(title, author, numberOfPages) {
+  title.value = "";
+  author.value = "";
+  numberOfPages.value = "";
+}
+
 // Event listener to close the popUp
 closeBtn.addEventListener("click", closePopUp);
-submitButton.addEventListener("click", random);
+submitButton.addEventListener("click", getNewBook);
 readStatus.addEventListener("click", toggleStatus);
