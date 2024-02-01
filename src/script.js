@@ -89,6 +89,7 @@ function updateLibraryDisplay() {
   const newBook = myLibrary[myLibrary.length - 1];
   let text;
   row.classList.add("book-entry"); // Class made for CSS hover
+  row.setAttribute("id", `${newBook.bookId}`);
 
   // Remove the message indicating that library is empty
   const empty = document.getElementById("content");
@@ -110,8 +111,27 @@ function updateLibraryDisplay() {
         text = document.createTextNode(`${newBook.numberOfPages}`);
         break;
       case 3:
-        text = document.createTextNode(`${newBook.haveRead}`);
-        break;
+        const statusButton = document.createElement("button");
+        statusButton.classList.add("status");
+        statusButton.textContent = `${newBook.haveRead}`;
+        statusButton.onclick = function () {
+          // Function that updates the value of the button
+          statusButton.classList.toggle("unread");
+          const index = myLibrary.findIndex(
+            (book) =>
+              book.bookId === Number(statusButton.parentNode.parentNode.id),
+          );
+
+          if (statusButton.textContent === "Read") {
+            statusButton.textContent = "Not read";
+            myLibrary[index].haveRead = "Not read";
+          } else {
+            statusButton.textContent = "Read";
+            myLibrary[index].haveRead = "Read";
+          }
+        };
+        cell.appendChild(statusButton);
+        continue;
       case 4:
         const button = document.createElement("div");
         button.classList.add("delete-button");
@@ -153,9 +173,6 @@ closeButton.addEventListener("click", closePopUp);
 
 function closePopUp() {
   // Function that closes the pop-up and resets the form to its original state
-  const title = document.getElementById("title");
-  const author = document.getElementById("author");
-  const numberOfPages = document.getElementById("numberOfPages");
   popUp.classList.add("hidden");
 }
 
@@ -173,6 +190,7 @@ function displayStoredBooks() {
   const table = document.getElementsByTagName("table")[0];
   myLibrary.forEach((e) => {
     const row = table.insertRow();
+    row.setAttribute("id", `${e.bookId}`);
     let text;
 
     row.classList.add("book-entry");
@@ -190,8 +208,26 @@ function displayStoredBooks() {
           text = document.createTextNode(`${e.numberOfPages}`);
           break;
         case 3:
-          text = document.createTextNode(`${e.haveRead}`);
-          break;
+          const statusButton = document.createElement("button");
+          statusButton.classList.add("status");
+          statusButton.textContent = `${e.haveRead}`;
+          statusButton.onclick = function () {
+            // Function that updates the value of the button
+            statusButton.classList.toggle("unread");
+            const index = myLibrary.findIndex(
+              (book) =>
+                book.bookId === Number(statusButton.parentNode.parentNode.id),
+            );
+            if (statusButton.textContent === "Read") {
+              statusButton.textContent = "Not read";
+              myLibrary[index].haveRead = "Not read";
+            } else {
+              statusButton.textContent = "Read";
+              myLibrary[index].haveRead = "Read";
+            }
+          };
+          cell.appendChild(statusButton);
+          continue;
         case 4:
           const button = document.createElement("div");
           button.classList.add("delete-button");

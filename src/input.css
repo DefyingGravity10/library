@@ -40,18 +40,18 @@ tr {
   @apply border-red-400 m-0
 }
 
-#status {
+#status, .status {
   @apply bg-green-300 rounded-xl w-1/3
 }
 
-#status:hover {
+#status:hover, .status:hover {
   @apply bg-green-400
 }
 
-#status.unread {
+#status.unread, .status.unread {
   @apply bg-red-200
 }
 
-#status.unread:hover {
+#status.unread:hover, .status.unread:hover {
   @apply bg-red-300
 }
