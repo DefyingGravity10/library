@@ -71,6 +71,7 @@ function submitNewBook() {
   );
   updateLibraryDisplay();
   clearValues(title, author, numberOfPages);
+  closePopUp();
 }
 
 function addBookToLibrary(title, author, numberOfPages, haveRead) {
@@ -140,6 +141,10 @@ function clearValues(title, author, numberOfPages) {
   title.value = "";
   author.value = "";
   numberOfPages.value = "";
+
+  title.classList.remove("empty");
+  author.classList.remove("empty");
+  numberOfPages.classList.remove("empty");
 }
 
 // Closes the pop-up
@@ -151,10 +156,6 @@ function closePopUp() {
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const numberOfPages = document.getElementById("numberOfPages");
-
-  title.classList.remove("empty");
-  author.classList.remove("empty");
-  numberOfPages.classList.remove("empty");
   popUp.classList.add("hidden");
 }
 
