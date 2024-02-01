@@ -41,7 +41,7 @@ tr {
 }
 
 #status, .status {
-  @apply bg-green-300 rounded-xl w-1/3
+  @apply bg-green-300 rounded-xl w-fit p-1 lg:w-1/3
 }
 
 #status:hover, .status:hover {
