@@ -114,6 +114,10 @@ function updateLibraryDisplay() {
         const statusButton = document.createElement("button");
         statusButton.classList.add("status");
         statusButton.textContent = `${newBook.haveRead}`;
+        if (readStatus.value === "Not read") {
+          statusButton.classList.add("unread");
+        }
+
         statusButton.onclick = function () {
           // Function that updates the value of the button
           statusButton.classList.toggle("unread");
@@ -211,6 +215,9 @@ function displayStoredBooks() {
           const statusButton = document.createElement("button");
           statusButton.classList.add("status");
           statusButton.textContent = `${e.haveRead}`;
+          if (readStatus.value === "Not read") {
+            statusButton.classList.add("unread");
+          }
           statusButton.onclick = function () {
             // Function that updates the value of the button
             statusButton.classList.toggle("unread");
