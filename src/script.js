@@ -1,7 +1,7 @@
 let currentId = 10000000;
 let myLibrary = [];
 
-// Constructor function for Book object
+/* Constructor function for Book object */
 function Book(title, author, numberOfPages, haveRead) {
   // Used to assign properties to the object's properties
   this.bookId = updateCurrentId();
@@ -11,97 +11,91 @@ function Book(title, author, numberOfPages, haveRead) {
   this.haveRead = haveRead;
 }
 
-/* Functions */
-
-function addBookToLibrary(title, author, numberOfPages, haveRead) {
-  newBook = new Book(title, author, numberOfPages, haveRead);
-  myLibrary.push(newBook);
-}
-
-// Helper function (possibly for back-end purposes)
 function updateCurrentId() {
   return ++currentId;
 }
 
-function displayStoredBooks() {
-  if (myLibrary.length === 0) {
-    emptyLibrary();
+/* Event Listeners and their corresponding functions */
+
+// Activates button that allows users to add a new book to the library
+const newBookButton = document.getElementById("new-book");
+newBookButton.addEventListener("click", openPopUp);
+
+// Opens pop-up whenever the "New Book" button is pressed
+const popUp = document.getElementById("pop-up");
+
+function openPopUp() {
+  popUp.classList.remove("hidden");
+}
+
+// Updates the status of the book (e.g. read or not read)
+const readStatus = document.getElementById("status");
+readStatus.addEventListener("click", toggleStatus);
+
+function toggleStatus() {
+  // Function that updates the value of the button
+  readStatus.classList.toggle("unread");
+
+  if (readStatus.value === "Read") {
+    readStatus.value = "Not read";
   } else {
-    const table = document.getElementsByTagName("table")[0];
-    myLibrary.forEach((e) => {
-      const row = table.insertRow();
-      let text;
-
-      row.classList.add("book-entry");
-
-      for (let i = 0; i < 5; ++i) {
-        const cell = row.insertCell(i);
-        switch (i) {
-          case 0:
-            text = document.createTextNode(`${e.title}`);
-            break;
-          case 1:
-            text = document.createTextNode(`${e.author}`);
-            break;
-          case 2:
-            text = document.createTextNode(`${e.numberOfPages}`);
-            break;
-          case 3:
-            text = document.createTextNode(`${e.haveRead}`);
-            break;
-          case 4:
-            const button = document.createElement("div");
-            button.classList.add("delete-button");
-            button.onclick = function () {
-              const row = button.parentNode.parentNode;
-              row.parentNode.removeChild(row);
-              myLibrary = myLibrary.filter((item) => item.bookId !== e.bookId);
-              if (myLibrary.length === 0) {
-                emptyLibrary();
-              }
-            };
-            cell.appendChild(button);
-            continue;
-          default:
-            text = document.createTextNode(``);
-            break;
-        }
-        cell.appendChild(text);
-      }
-    });
+    readStatus.value = "Read";
   }
 }
 
-function emptyLibrary() {
-  const empty = document.getElementById("content");
+// Submits new book entry
+const submitButton = document.getElementById("submit");
+submitButton.addEventListener("click", submitNewBook);
 
-  if (empty.querySelector(".empty") !== null) {
-    empty.querySelector(".empty").remove();
+function submitNewBook() {
+  // Function that performs form vallidation and adds book to library
+  const title = document.getElementById("title");
+  const author = document.getElementById("author");
+  const numberOfPages = document.getElementById("numberOfPages");
+  const status = document.getElementById("status");
+
+  // Form validation
+  if (!title.value || !author.value || !numberOfPages.value) {
+    title.classList.add("empty");
+    author.classList.add("empty");
+    numberOfPages.classList.add("empty");
+    alert("Please fill out all the fields.");
+    return;
   }
 
-  const div = document.createElement("div");
-  const text = document.createTextNode(
-    "There are currently no books in the library.",
+  addBookToLibrary(
+    title.value,
+    author.value,
+    numberOfPages.value,
+    status.value,
   );
-  div.classList.add("empty");
-  div.appendChild(text);
-  empty.appendChild(div);
+  updateLibraryDisplay();
+  clearValues(title, author, numberOfPages);
 }
 
-function updateLibrary() {
+function addBookToLibrary(title, author, numberOfPages, haveRead) {
+  // Function that adds a new book to the library
+  newBook = new Book(title, author, numberOfPages, haveRead);
+  myLibrary.push(newBook);
+}
+
+function updateLibraryDisplay() {
+  // Function that displays the updated books in the library
+
+  // Get the table, add a row and prepare to add the newly added book
   const table = document.getElementsByTagName("table")[0];
   const row = table.insertRow();
   const newBook = myLibrary[myLibrary.length - 1];
   let text;
+  row.classList.add("book-entry"); // Class made for CSS hover
 
-  row.classList.add("book-entry");
-
+  // Remove the message indicating that library is empty
   const empty = document.getElementById("content");
-
   if (empty.querySelector(".empty") !== null) {
     empty.querySelector(".empty").remove();
   }
 
+  // Add new cells that display the attributes of the book
   for (let i = 0; i < 5; ++i) {
     const cell = row.insertCell(i);
     switch (i) {
@@ -121,6 +115,7 @@ function updateLibrary() {
         const button = document.createElement("div");
         button.classList.add("delete-button");
         button.onclick = function () {
+          // Function that deletes the book from the library and updates the display
           const row = button.parentNode.parentNode;
           row.parentNode.removeChild(row);
           myLibrary = myLibrary.filter(
@@ -140,27 +135,19 @@ function updateLibrary() {
   }
 }
 
-// Sample books
-addBookToLibrary(`Book Title`, `Me`, `199`, `have not read`);
-//addBookToLibrary(`HAHAHAHA`, `Me again`, `9`, `have read`);
-//addBookToLibrary(`a`, `Me again`, `29`, `have read`);
-displayStoredBooks();
-
-const newBookButton = document.getElementById("new-book");
-newBookButton.addEventListener("click", openPopUp);
-
-const popUp = document.getElementById("pop-up");
-const submitButton = document.getElementById("submit");
-const closeBtn = document.getElementById("close-pop-up");
-const readStatus = document.getElementById("status");
-
-// Function to show the popUp
-function openPopUp() {
-  popUp.classList.remove("hidden");
+function clearValues(title, author, numberOfPages) {
+  // Function that clears the forms after a book is submitted
+  title.value = "";
+  author.value = "";
+  numberOfPages.value = "";
 }
 
-// Function to hide the popUp
+// Closes the pop-up
+const closeButton = document.getElementById("close-pop-up");
+closeButton.addEventListener("click", closePopUp);
+
 function closePopUp() {
+  // Function that closes the pop-up and resets the form to its original state
   const title = document.getElementById("title");
   const author = document.getElementById("author");
   const numberOfPages = document.getElementById("numberOfPages");
@@ -171,46 +158,77 @@ function closePopUp() {
   popUp.classList.add("hidden");
 }
 
-function getNewBook() {
-  const title = document.getElementById("title");
-  const author = document.getElementById("author");
-  const numberOfPages = document.getElementById("numberOfPages");
-  const status = document.getElementById("status");
+/* Functions without event listeners attached to them */
 
-  if (!title.value || !author.value || !numberOfPages.value) {
-    title.classList.add("empty");
-    author.classList.add("empty");
-    numberOfPages.classList.add("empty");
-    alert("Please fill out all the fields.");
+function displayStoredBooks() {
+  // Function that displays stored books (if applicable)
+
+  // Checks if library is empty and displays a message if such were the case
+  if (myLibrary.length === 0) {
+    emptyLibrary();
     return;
   }
-  addBookToLibrary(
-    title.value,
-    author.value,
-    numberOfPages.value,
-    status.value,
-  );
-  updateLibrary();
-  clearValues(title, author, numberOfPages);
+
+  const table = document.getElementsByTagName("table")[0];
+  myLibrary.forEach((e) => {
+    const row = table.insertRow();
+    let text;
+
+    row.classList.add("book-entry");
+
+    for (let i = 0; i < 5; ++i) {
+      const cell = row.insertCell(i);
+      switch (i) {
+        case 0:
+          text = document.createTextNode(`${e.title}`);
+          break;
+        case 1:
+          text = document.createTextNode(`${e.author}`);
+          break;
+        case 2:
+          text = document.createTextNode(`${e.numberOfPages}`);
+          break;
+        case 3:
+          text = document.createTextNode(`${e.haveRead}`);
+          break;
+        case 4:
+          const button = document.createElement("div");
+          button.classList.add("delete-button");
+          button.onclick = function () {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+            myLibrary = myLibrary.filter((item) => item.bookId !== e.bookId);
+            if (myLibrary.length === 0) {
+              emptyLibrary();
+            }
+          };
+          cell.appendChild(button);
+          continue;
+        default:
+          text = document.createTextNode(``);
+          break;
+      }
+      cell.appendChild(text);
+    }
+  });
 }
 
-function toggleStatus() {
-  readStatus.classList.toggle("unread");
+function emptyLibrary() {
+  // Function that handles an empty library
+  const empty = document.getElementById("content");
 
-  if (readStatus.value === "Read") {
-    readStatus.value = "Not read";
-  } else {
-    readStatus.value = "Read";
+  if (empty.querySelector(".empty") !== null) {
+    empty.querySelector(".empty").remove();
   }
+
+  const div = document.createElement("div");
+  const text = document.createTextNode(
+    "There are currently no books in the library.",
+  );
+  div.classList.add("empty");
+  div.appendChild(text);
+  empty.appendChild(div);
 }
 
-function clearValues(title, author, numberOfPages) {
-  title.value = "";
-  author.value = "";
-  numberOfPages.value = "";
-}
-
-// Event listener to close the popUp
-closeBtn.addEventListener("click", closePopUp);
-submitButton.addEventListener("click", getNewBook);
-readStatus.addEventListener("click", toggleStatus);
+// Calls the displayStoredBooks function to display initial state of the library
+displayStoredBooks();
