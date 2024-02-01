@@ -33,7 +33,7 @@ tr {
 }
 
 .text-box {
-  @apply border rounded-sm border-zinc-400 bg-zinc-100
+  @apply border rounded-sm border-zinc-400 bg-zinc-100 m-0
 }
 
 .text-box:invalid.empty {

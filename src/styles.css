@@ -831,6 +831,7 @@ tr {
 }
 
 .text-box {
+  margin: 0px;
   border-radius: 0.125rem;
   border-width: 1px;
   --tw-border-opacity: 1;
